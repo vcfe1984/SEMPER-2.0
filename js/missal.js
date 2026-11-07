@@ -207,11 +207,11 @@ function renderReading(o, it) {
     const book = (it.lines.find((l) => /^恭讀/.test(l)) || '恭讀聖福音').replace(/[　\s]+[\d:,，\-–、 ]+.*$/, '').replace(/[　\s].*$/, '');
     o.h3(it.head, ref);
     o.say('執事或主祭', '願主與你們同在。', SUP); o.say('信友', '也與你的心靈同在。', SUP);
-    o.say('執事或主祭', book + '。', SUP); o.say('信友', '主，願你受讚美。', SUP);
+    o.say('執事或主祭', book + '。', SUP); o.say('信友', '主，願祢受讚美。', SUP);
   } else o.h3(it.head.replace(/^(答唱詠)[　\s]*/, '$1　'));
   for (const l of it.lines) {
     if (/^（.*）$/.test(l)) o.rub(l);
-    else if (/^——上主的話/.test(l)) { o.say(it.kind === '福音' ? '執事或主祭' : '讀經員', '上主的話。'); o.say('信友', it.kind === '福音' ? '基督，我們讚美你。' : '感謝天主。', SUP); }
+    else if (/^——上主的話/.test(l)) { o.say(it.kind === '福音' ? '執事或主祭' : '讀經員', '上主的話。'); o.say('信友', it.kind === '福音' ? '基督，我們讚美祢。' : '感謝天主。', SUP); }
     else if (/^【答】/.test(l)) o.say('答', l.replace(/^【答】[：:]?\s*/, ''));
     else if (/^(領|眾)[：:]/.test(l)) o.raw(`<p class="m-p"><span class="spk">${l[0]}：</span>${inl(l.slice(2).replace(/【答】$/, '')).trim()}${/【答】$/.test(l) ? ' <span class="ri">【答】</span>' : ''}</p>`);
     else if (/^恭讀/.test(l)) { if (it.kind !== '福音') o.rub(l); }
@@ -270,7 +270,7 @@ export function renderMass(info, mass, st, dateStr) {
   if (f.entrance && f.entrance.length) { o.h3('進堂詠'); f.entrance.forEach((l) => (/^（.*）$/.test(l) || l === '或' ? o.rub(l) : o.say('', l))); }
   o.blocks(O.sign); o.h3('致候詞'); o.blocks(O.greeting[st.greet] || O.greeting[0]);
   o.h3('懺悔詞'); o.blocks(O.penitential[st.pen] || O.penitential[0]);
-  if (st.pen !== 2) { o.h3('上主，求你垂憐'); o.blocks(O.kyrie.slice(1)); }
+  if (st.pen !== 2) { o.h3('上主，求祢垂憐'); o.blocks(O.kyrie.slice(1)); }
   if (st.gloria) { o.h3('光榮頌'); o.blocks(O.gloria.filter((b) => !/^按禮規/.test(b.x))); }
   o.h3('集禱經'); o.say('主祭', '請大家祈禱。（合掌）'); o.rub('全體默禱片刻。主祭伸手誦念集禱經：');
   arr(f.collect).forEach((l, i) => (l === '或' ? o.rub('或') : o.say(i === 0 ? '主祭' : '', l)));
@@ -341,7 +341,7 @@ export function optionsPanel(info, list, cur, st, dateStr) {
   return `<details class="mpanel" data-m="panel"${st.closed ? '' : ' open'}><summary>彌撒選項　<small>${esc(EPS[st.ep])}・${esc(pfOpts.find(([v]) => String(v) === String(st.pf))?.[1]?.replace(/（.*$/, '') || '')}</small></summary>${massSel(list, cur)}
   <div class="mopts">
   ${sel('greet', '致候詞', [[0, '第一式'], [1, '第二式'], [2, '第三式']], st.greet)}
-  ${sel('pen', '懺悔詞', [[0, '第一式（我向全能的天主）'], [1, '第二式'], [2, '第三式（求你垂憐）']], st.pen)}
+  ${sel('pen', '懺悔詞', [[0, '第一式（我向全能的天主）'], [1, '第二式'], [2, '第三式（求祢垂憐）']], st.pen)}
   ${sel('gloria', '光榮頌', [[1, '念'], [0, '不念']], st.gloria ? 1 : 0)}
   ${sel('creed', '信經', [[0, '尼西亞信經'], [1, '宗徒信經'], [-1, '不念']], st.creed)}
   ${sel('ep', '感恩經', Object.entries(EPS), st.ep)}
